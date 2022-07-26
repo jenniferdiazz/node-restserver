@@ -1,13 +1,23 @@
 const express = require('express')
 const cors = require('cors');
+const { bdConnection } = require('../database/config')
 class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
-        //Middlewares funcion que siempre va a  ejecutarse, funciones que añaden funcionalidad al webserver
+       
+       this.conectarDB();
+        //Middlewares funcion que siempre va a  ejecutarse, 
+        //funciones que añaden funcionalidad al webserver
+        //funcion que se ejecuta antes de ejecutar un controlar o de seguir
+        //ejecutando peticiones
         this.middlewares();
         this.routes();
+    }
+
+    async conectarDB(){
+        await bdConnection()
     }
 
     middlewares(){
